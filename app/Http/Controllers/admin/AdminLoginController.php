@@ -42,7 +42,7 @@ class AdminLoginController extends Controller
              
 
         }else{
-            return redirect()->route('admin.login')
+            return redirect()->route('dashboard')
             ->withErrors($validator)
             ->withInput($request->only('email'));
         }

@@ -1,3 +1,5 @@
+@extends('admin.layouts.app')
+@section('content')
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,7 +59,15 @@
                 @endforeach
             </tbody>
         </table>
+
     @else
         <p>No spots found.</p>
+    
     @endif
-
+    @endsection
+@section('customJs')
+<script>
+    console.log('hello')
+</script>
+    
+@endsection

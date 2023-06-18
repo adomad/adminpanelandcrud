@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SpotController;
+use App\Http\Controllers\BookingController;
 
 
 
@@ -21,13 +23,19 @@ use App\Http\Controllers\SpotController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+    
+    Route::get('/register', function(){
+        return view('register');
+});
+Route::post('/login', function(){
+    return view('login'); 
+});
+Route::get('/profile', function(){
+    return view('profile'); 
 });
 Route::group(['prefix'=>'admin'],function(){
     Route::group(['middleware'=>'admin.guest'],function(){
-        Route::get('/login',[AdminLoginController::class,'index'])->name('admin.login');
+        Route::post('/login',[AdminLoginController::class,'index'])->name('admin.login');
         Route::post('/authenticate',[AdminLoginController::class,'authenticate'])->name('admin.authenticate');
         Route::get('/authenticate',[AdminLoginController::class,'authenticate'])->name('admin.authenticate');
 
@@ -41,7 +49,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/dashboard',[HomeController::class,'index'])->name('admin.dashboard');
         Route::get('/logout',[HomeController::class,'logout'])->name('admin.logout');
         
-        Route::get('/employees/{employee}/downloadPDF', [EmployeeController::class, 'downloadPDF'])->name('download.pdf');
+        Route::get('/employees/downloadPDF', [EmployeeController::class, 'downloadPDF'])->name('download.pdf');
         Route::get('/employees',[EmployeeController::class,'index'])->name('employees.index');
         Route::get('/employees/create',[EmployeeController::class,'create'])->name('employees.create');
         Route::post('/employees',[EmployeeController::class,'store'])->name('employees.store');
@@ -53,26 +61,11 @@ Route::group(['prefix'=>'admin'],function(){
         Route::post('/employees/{employee}',[EmployeeController::class,'update'])->name('employees.update');
         Route::delete('/employees/{employee}',[EmployeeController::class,'destroy'])->name('employees.destroy');;
 
-        
-
-
-       
 
 
 
-        
 
-        
-
-
-
- 
-
-    });
-
-
-});
-Route::resource('spots', 'SpotController');
+        Route::resource('spots', 'SpotController');
 
        
 
@@ -96,3 +89,46 @@ Route::get('/spots/{spot}/book', [SpotController::class, 'bookForm'])->name('spo
 
 
 
+
+
+// Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+// Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+// Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+// Route::get('/bookings/{bookings}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+// Route::put('/bookings/{bookings}', [BookingController::class, 'update'])->name('bookings.update');
+// Route::delete('/bookings/{bookings}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+
+
+
+
+
+       
+
+
+
+        
+
+        
+
+
+
+ 
+
+    });
+
+
+});
+Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+Route::get('/bookings/{bookings}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+Route::put('/bookings/{bookings}', [BookingController::class, 'update'])->name('bookings.update');
+Route::delete('/bookings/{bookings}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+
+
+
+
+
+Route::get('/loginform', [AdminController::class, 'login'])->name('login');
+Route::get('/register', [AdminController::class, 'register'])->name('register');
+route::get('/AdminHome' , [AdminController::class , 'index'])->name('home'); 
